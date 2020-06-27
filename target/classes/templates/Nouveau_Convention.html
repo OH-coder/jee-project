@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Create New Product</title>
+</head>
+<body>
+<div align="center">
+    <h1>Create New Product</h1>
+    <br />
+    <form action="#" th:action="@{/save}" th:object="${convention}"
+          method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Convention objet:</td>
+                <td><input type="text" th:field="*{objet}" /></td>
+            </tr>
+            <tr>
+            <div class="form-group">
+                <label>Example select</label>
+                <select class="form-control" th:field="*{type}">
+                  <option th:value="'Universitaire'" th:text="Universitaire"></option>
+                    <option th:value="' Industrielle-Nationale'" th:text="Industrielle-Nationale"></option>
+                    <option th:value="'Industrielle'" th:text="Industrielle"></option>
+                </select>
+            </div>
+            </tr>
+            <tr>
+                <td><input type="text" th:field="*{participants[0]}"></td>
+                <td><input type="text" th:field="*{participants[1]}"></td>
+                <td><input type="text" th:field="*{participants[2]}"></td>
+                <td><input type="text" th:field="*{participants[3]}"></td>
+3
+            </tr>
+            <tr>
+                <td>date de mettre en vigeur:</td>
+                <td><input type="date" th:name="debut" /></td>
+            </tr>
+            <tr>
+                <td>date de signature de convention:</td>
+                <td><input type="date" th:name="signaturee"/></td>
+            </tr>
+            <tr>
+                <td>date de signature d'expiration :</td>
+                <td><input type="date"  th:name="expiration"/></td>
+            </tr>
+            <tr>
+                <td>date de modification :</td>
+                <td><input type="date" th:name="edition"  /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Save</button> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
