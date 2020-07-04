@@ -26,6 +26,7 @@
                     <label>name</label>
                     <input type="text" name="keyword" placeholder="chercher par objet">
                     <button class="btn btn-success">chercher</button>
+                    <button class="btn btn-primary" onclick="myFunction()">Print</button>
                 </div>
             </form>
             <table class="table  table-hover">
@@ -75,10 +76,17 @@
                        th:href="@{/(page=${status.index})}" th:text="${status.index}"></a>
                 </li>
             </ul>
+
             </nav>
     </div>
     </div>
 </div>
 </div>
+
+<script type="text/javascript">
+    function myFunction() {
+        window.print();
+    }
+</script>
 </body>
 </html>

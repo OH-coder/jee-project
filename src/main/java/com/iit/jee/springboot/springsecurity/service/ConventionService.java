@@ -9,6 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.util.Date;
+
 
 @Service
 @Transactional
@@ -21,10 +24,11 @@ public class ConventionService {
         return conventions;
     }
 
-    public Page<Convention> chercher(String mc, int page, int size) {
-        Page<Convention> conventions = repository.findAllByObjetContains(mc, PageRequest.of(page, size));
+    public Page<Convention> chercher(Date mc, int page, int size) throws ParseException {
+        Page<Convention> conventions = repository.findAllBySignatureContains(mc, PageRequest.of(page, size));
         return conventions;
     }
+
     public void save(Convention convention) {
         repository.save(convention);
     }
@@ -37,4 +41,8 @@ public class ConventionService {
         repository.deleteById(id);
     }
 
+    public Page<Convention> listAll2(String mc, int page, int size) {
+        Page<Convention> conventions = repository.findAllByObjetContainingOrTypeContaining(mc, mc, PageRequest.of(page, size));
+        return conventions;
+    }
 }

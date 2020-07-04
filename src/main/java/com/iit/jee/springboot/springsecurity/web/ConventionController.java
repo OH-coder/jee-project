@@ -10,25 +10,47 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
 public class ConventionController {
 	@Autowired
 	private ConventionService service;
-	
+
 
 	@RequestMapping("/")
 	public String viewHomePage(Model model,
 							   @RequestParam(name = "page", defaultValue = "0") int page,
 							   @RequestParam(name = "size", defaultValue = "5") int size,
-							   @RequestParam(name = "keyword", defaultValue = "") String mc) {
-		Page<Convention> listConventions = service.chercher(mc, page, size);
-		model.addAttribute("listConventions", listConventions.getContent());
-		model.addAttribute("pages", new int[listConventions.getTotalPages()]);
-		model.addAttribute("currentPage", page);
-		return "index";
+							   @RequestParam(name = "keyword", defaultValue = "") String mc) throws ParseException {
+		if (mc.equals("")) {
+			Page<Convention> listConventions = service.listAll(page, size);
+			model.addAttribute("listConventions", listConventions.getContent());
+			model.addAttribute("pages", new int[listConventions.getTotalPages()]);
+			model.addAttribute("currentPage", page);
+			return "index";
+		} else if (mc.contains("-")) {
+			DateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date frmDate = date.parse(mc);
+			Page<Convention> listConventions = service.chercher(frmDate, page, size);
+			model.addAttribute("listConventions", listConventions.getContent());
+			model.addAttribute("pages", new int[listConventions.getTotalPages()]);
+			model.addAttribute("currentPage", page);
+			return "index";
+
+		} else {
+
+			Page<Convention> listConventions = service.listAll2(mc, page, size);
+			model.addAttribute("listConventions", listConventions.getContent());
+			model.addAttribute("pages", new int[listConventions.getTotalPages()]);
+			model.addAttribute("currentPage", page);
+			return "index";
+		}
 	}
+
 
 
 	@RequestMapping("/new")
