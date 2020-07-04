@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Create New Product</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
+    <style>
+        div {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <h1>Create New Product</h1>
+    <br/>
+    <form action="#" th:action="@{/save}" th:object="${convention}"
+          method="post">
+        <div class="form-row">
+            <div class="col-md-12">
+                <label>Convention objet</label>
+                <input type="text" th:field="*{objet}"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12"><label style="text-align: center">type de convention</label></div>
+        </div>
+        <div class="form-row">
+
+            <div class="col-md-12">
+                <select class="form-control" th:field="*{type}">
+                    <option th:value="'Universitaire'" th:text="Universitaire"></option>
+                    <option th:value="' Industrielle-Nationale'" th:text="Industrielle-Nationale"></option>
+                    <option th:value="'Industrielle'" th:text="Industrielle"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12"><label style="text-align: center">Participants</label></div>
+        </div>
+        <div class="form-row">
+
+            <div class="col-sm-2 ">
+
+                <input placeholder="participant" type="text" th:field="*{participants[0]}"></td>
+            </div>
+            <div class="col-sm-2">
+                <input type="text" placeholder="participant" th:field="*{participants[1]}"></td>
+            </div>
+            <div class="col-sm-2">
+                <input type="text" placeholder="participant" th:field="*{participants[2]}"></td>
+            </div>
+            <div class="col-sm-2">
+                <input type="text" placeholder="participant" th:field="*{participants[3]}"></td>
+            </div>
+        </div>
+        <div class="form-row">
+
+            <div class="col-sm-3 ">
+                <label>date de mettre en vigeur:</label>
+                <input class="form-control" type="date" th:name="debut">
+            </div>
+            <div class="col-sm-3">
+                <label>date de signature de convention:</label>
+                <input class="form-control" type="date" th:name="signaturee"/>
+            </div>
+            <div class="col-sm-3">
+                <label>date de signature d'expiration :</label>
+                <input class="form-control" type="date" th:name="expiration"/>
+            </div>
+            <div class="col-sm-3">
+                <label>Date de modification :</label>
+                <input class="form-control" type="date" th:name="edition"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <button style="margin-left: 20px" class="form-control btn btn-primary" type="submit">Save</button>
+        </div>
+
+    </form>
+
+</div>
+</body>
+</html>
