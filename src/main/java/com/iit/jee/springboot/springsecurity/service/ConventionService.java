@@ -1,16 +1,13 @@
 package com.iit.jee.springboot.springsecurity.service;
 
 
+import com.iit.jee.springboot.springsecurity.model.Convention;
+import com.iit.jee.springboot.springsecurity.repository.ConventionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.iit.jee.springboot.springsecurity.model.Convention;
-import com.iit.jee.springboot.springsecurity.repository.ConventionRepository;
-
-import java.util.List;
 
 
 @Service
@@ -18,11 +15,16 @@ import java.util.List;
 public class ConventionService {
     @Autowired
     private ConventionRepository repository;
-    public List<Convention> listAll() {
-        Page <Convention> conventions=repository.findAll(PageRequest.of(0,5));
-        return conventions.getContent();
+
+    public Page<Convention> listAll(int page, int size) {
+        Page<Convention> conventions = repository.findAll(PageRequest.of(page, size));
+        return conventions;
     }
 
+    public Page<Convention> chercher(String mc, int page, int size) {
+        Page<Convention> conventions = repository.findAllByObjetContains(mc, PageRequest.of(page, size));
+        return conventions;
+    }
     public void save(Convention convention) {
         repository.save(convention);
     }
@@ -34,4 +36,5 @@ public class ConventionService {
     public void delete(long id) {
         repository.deleteById(id);
     }
+
 }

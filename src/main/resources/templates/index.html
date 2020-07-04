@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="webjars/bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
+    <script src="https://kit.fontawesome.com/b7587251ff.js" crossorigin="anonymous"></script>
+    <style>
+        th, td {
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container">
 <div align="center">
-    <div class="card">
-        <div class="card-header">liste des patients</div>
-<div class="card-body">
-    <a href="/new">Create New Product</a>
-    <br/><br/>
-    <table class="table" border="1" cellpadding="10">
-        <thead>
+    <div>
+        <div class="card-header">liste des patients
+        </div>
+        <div class="card-header"><a href="/new">Create New Product</a>
+        </div>
+        <div class="card-body ">
+            <form method="get" th:action="${'/'}">
+                <div class="form-group">
+                    <label>name</label>
+                    <input type="text" name="keyword" placeholder="chercher par objet">
+                    <button class="btn btn-success">chercher</button>
+                </div>
+            </form>
+            <table class="table  table-hover">
+                <thead class="thead-dark">
         <tr>
             <th>Convention ID</th>
             <th>Objet</th>
@@ -24,7 +39,8 @@
             <th>Date signature des participants</th>
             <th>Date d'edition du convention</th>
             <th>Date d'expiration de convention</th>
-            <th>Actions</th>
+            <th>modifier Convention</th>
+            <th>suprimer Convention</th>
         </tr>
         </thead>
         <tbody>
@@ -33,22 +49,33 @@
             <td th:text="${product.objet}">Objet</td>
             <td th:text="${product.type}">Type</td>
             <td >
-                <ul th:each="participant: ${product.participants}"><li th:text="${participant}"></li></ul>
+                <ul class="list-group" th:each="participant: ${product.participants}">
+                    <li class="list-group-item list-group-item-success" th:text="${participant}"></li>
+                </ul>
             </td>
             <td th:text="${product.declenche}">Date d'entrée en vigeur</td>
             <td th:text="${product.signature}">Date signature des participants</td>
             <td th:text="${product.dateEdition}">Date d'edition du convention</td>
             <td th:text="${product.dateExpiration}">date dexpiration du convention</td>
-            <
+
 
             <td>
-                <a th:href="@{/edit(param='product.id')}">Edit</a>
-                &nbsp;&nbsp;&nbsp;
-                <a th:href="@{/delete(param='product.id')}">Delete</a>
+                <a th:href="@{/edit/{id}(id=${product.id})}"><i class="fas fa-edit"></i>Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/delete/{id}(id=${product.id})}"><i class="fas fa-trash-alt"></i>Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
+
+            <ul class="nav nav-pills">
+                <li th:each="page,status:${pages}">
+                    <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+                       th:href="@{/(page=${status.index})}" th:text="${status.index}"></a>
+                </li>
+            </ul>
+            </nav>
     </div>
     </div>
 </div>
